@@ -1,6 +1,6 @@
 {
   "name": "@7893/lens-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hybrid search toolkit extracted from the Lens visual intelligence engine",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "access": "public"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "typescript": "~5.8.3",
-    "vitest": "^3.2.6"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   }
 }
