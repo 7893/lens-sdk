@@ -1,0 +1,32 @@
+name: Package CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.10.0'
+      - run: npm install --global npm@11.19.1
+      - run: npm ci
+      - run: npm test
+      - name: Verify source distribution
+        run: |
+          if [ -n "$(git ls-files node_modules)" ]; then
+            echo "::error::Installed dependencies must not be tracked."
+            exit 1
+          fi
+          npm pack
+          npm install --prefix "$RUNNER_TEMP/lens-consumer" --ignore-scripts --no-audit ./7893-lens-sdk-*.tgz
+          node -e 'const assert = require("node:assert/strict"); const sdk = require(process.env.RUNNER_TEMP + "/lens-consumer/node_modules/@7893/lens-sdk"); assert.equal(typeof sdk.rrfRank, "function");'
