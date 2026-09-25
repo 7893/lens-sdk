@@ -17,10 +17,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '26.10.0'
           registry-url: 'https://npm.pkg.github.com'
 
-      - run: npm install
+      - name: Set up npm
+        run: npm install --global npm@11.19.1
+
+      - run: npm ci
       - run: npm test
       - run: npm publish
         env:
